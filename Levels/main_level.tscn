@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cfv45oifmkvjx"]
+[gd_scene load_steps=6 format=3 uid="uid://cfv45oifmkvjx"]
 
+[ext_resource type="Texture2D" uid="uid://dnp57upv4knvj" path="res://Art/Legacy-Fantasy - High Forest 2.3/Background/Background.png" id="1_f2tin"]
 [ext_resource type="Texture2D" uid="uid://dfkkkr5py630y" path="res://Art/Legacy-Fantasy - High Forest 2.3/Assets/Tiles.png" id="1_q31i2"]
 [ext_resource type="PackedScene" uid="uid://0nqc2vvagh4u" path="res://Prefab/player.tscn" id="2_d5f7u"]
 
@@ -1424,6 +1425,11 @@ sources/0 = SubResource("TileSetAtlasSource_0vfhl")
 
 [node name="MainLevel" type="Node2D"]
 
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(258, 57)
+scale = Vector2(1.75, 1.756)
+texture = ExtResource("1_f2tin")
+
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(1, 0)
 tile_set = SubResource("TileSet_gb103")
@@ -1433,7 +1439,6 @@ layer_0/tile_data = PackedInt32Array(327682, 196608, 0, 393218, 196608, 1, 45875
 
 [node name="Player" parent="." instance=ExtResource("2_d5f7u")]
 position = Vector2(64, 59)
-jump_velocity = -150.0
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
