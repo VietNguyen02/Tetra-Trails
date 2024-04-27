@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://0nqc2vvagh4u"]
+[gd_scene load_steps=59 format=3 uid="uid://0nqc2vvagh4u"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_521x7"]
 [ext_resource type="Texture2D" uid="uid://dhqbbb5bsfgop" path="res://Art/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_woxtk"]
@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://dgyn5xygnte10" path="res://Art/Legacy-Fantasy - High Forest 2.3/Character/Jump-Start/Jump-Start-Sheet.png" id="3_nempe"]
 [ext_resource type="Texture2D" uid="uid://baybnccyxvvxs" path="res://Art/Legacy-Fantasy - High Forest 2.3/Character/Jumlp-All/Jump-All-Sheet.png" id="4_kt6g6"]
 [ext_resource type="Texture2D" uid="uid://8rfmtwaee2k4" path="res://Art/Legacy-Fantasy - High Forest 2.3/Character/Run/Run-Sheet.png" id="5_5hie6"]
+[ext_resource type="Script" path="res://Scripts/CharacterStateMachine.gd" id="7_ttpt0"]
+[ext_resource type="Script" path="res://Scripts/GroundState.gd" id="8_j8ttp"]
+[ext_resource type="Script" path="res://Scripts/AirState.gd" id="9_4hvml"]
+[ext_resource type="Script" path="res://Scripts/LandingState.gd" id="10_nwmja"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aboym"]
 height = 45.0
@@ -457,5 +461,19 @@ tree_root = SubResource("AnimationNodeStateMachine_k3vyd")
 advance_expression_base_node = NodePath("")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Move/blend_position = 0.0246781
+
+[node name="CharacterStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("7_ttpt0")
+current_state = NodePath("Ground")
+
+[node name="Ground" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("8_j8ttp")
+
+[node name="Air" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("9_4hvml")
+
+[node name="Landing" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("10_nwmja")
+can_move = false
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
