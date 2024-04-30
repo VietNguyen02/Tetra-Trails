@@ -485,9 +485,8 @@ position = Vector2(2.08165e-12, 2)
 shape = SubResource("CapsuleShape2D_aboym")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_c0gtm")
-offset = Vector2(2.08165e-12, -8.5)
-hframes = 8
+texture = ExtResource("1_woxtk")
+hframes = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -503,52 +502,10 @@ advance_expression_base_node = NodePath("")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Move/blend_position = 0.0246781
 
-[node name="DebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine")]
+[node name="DebugLabel" type="Label" parent="."]
 offset_left = -57.0
 offset_top = -52.0
 offset_right = 57.0
 offset_bottom = -29.0
 text = "State:"
-script = ExtResource("7_1rsqh")
-state_machine = NodePath("../CharacterStateMachine")
-
-[node name="CharacterStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state", "character", "animation_tree")]
-script = ExtResource("7_ttpt0")
-current_state = NodePath("Ground")
-character = NodePath("..")
-animation_tree = NodePath("../AnimationTree")
-
-[node name="Ground" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "attack_state")]
-script = ExtResource("8_j8ttp")
-air_state = NodePath("../Air")
-attack_state = NodePath("../Attack")
-
-[node name="Air" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("landing_state")]
-script = ExtResource("9_4hvml")
-landing_state = NodePath("../Landing")
-landing_animation = "Jump_End"
-
-[node name="Landing" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state")]
-script = ExtResource("10_nwmja")
-landing_animation_name = "Jump_End"
-ground_state = NodePath("../Ground")
-can_move = false
-
-[node name="Attack" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state")]
-script = ExtResource("12_2c7tl")
-ground_state = NodePath("../Ground")
-
-[node name="Timer" type="Timer" parent="CharacterStateMachine/Attack"]
-wait_time = 0.2
-one_shot = true
-
-[node name="Sword" type="Area2D" parent="."]
-script = ExtResource("13_wqw2s")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword"]
-position = Vector2(27.5, -12)
-shape = SubResource("RectangleShape2D_cmoqv")
-
-[connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/Landing" method="_on_animation_tree_animation_finished"]
-[connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/Attack" method="_on_animation_tree_animation_finished"]
-[connection signal="body_entered" from="Sword" to="Sword" method="_on_body_entered"]
+scrip
