@@ -1,0 +1,98 @@
+[gd_scene load_steps=8 format=3 uid="uid://cjrxypwkjf1pe"]
+
+[ext_resource type="Texture2D" uid="uid://djarse3rhwhus" path="res://Art/Legacy-Fantasy - High Forest 2.3/Mob/Snail/walk-Sheet.png" id="1_m2hfq"]
+[ext_resource type="Script" path="res://Scripts/Damageable.gd" id="2_qo3x7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4t6dd"]
+size = Vector2(40.5, 28.75)
+
+[sub_resource type="Animation" id="Animation_24jkh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_yovj0"]
+resource_name = "Walk"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_m2hfq")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3f76w"]
+_data = {
+"RESET": SubResource("Animation_24jkh"),
+"Walk": SubResource("Animation_yovj0")
+}
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_qb4j3"]
+graph_offset = Vector2(-1.15894e-05, -11.6325)
+
+[node name="Enemy" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4.5)
+scale = Vector2(0.75, 0.8)
+shape = SubResource("RectangleShape2D_4t6dd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_m2hfq")
+hframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3f76w")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3f76w")
+}
+tree_root = SubResource("AnimationNodeStateMachine_qb4j3")
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="Damageable" type="Node" parent="."]
+script = ExtResource("2_qo3x7")

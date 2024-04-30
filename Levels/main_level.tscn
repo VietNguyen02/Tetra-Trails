@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cfv45oifmkvjx"]
+[gd_scene load_steps=7 format=3 uid="uid://cfv45oifmkvjx"]
 
 [ext_resource type="Texture2D" uid="uid://dnp57upv4knvj" path="res://Art/Legacy-Fantasy - High Forest 2.3/Background/Background.png" id="1_f2tin"]
 [ext_resource type="Texture2D" uid="uid://dfkkkr5py630y" path="res://Art/Legacy-Fantasy - High Forest 2.3/Assets/Tiles.png" id="1_q31i2"]
 [ext_resource type="PackedScene" uid="uid://0nqc2vvagh4u" path="res://Prefab/player.tscn" id="2_d5f7u"]
+[ext_resource type="PackedScene" uid="uid://cjrxypwkjf1pe" path="res://Prefab/enemy.tscn" id="4_gkfog"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0vfhl"]
 texture = ExtResource("1_q31i2")
@@ -1442,6 +1443,9 @@ position = Vector2(64, 59)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
+
+[node name="Enemy" parent="." instance=ExtResource("4_gkfog")]
+position = Vector2(147, 64)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(64, 59)
