@@ -517,9 +517,9 @@ position = Vector2(2.08165e-12, 2)
 shape = SubResource("CapsuleShape2D_aboym")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("6_j646f")
+texture = ExtResource("4_kt6g6")
 offset = Vector2(2.08165e-12, 7)
-hframes = 8
+hframes = 15
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -606,4 +606,5 @@ facing_right_direction = Vector2(25, 2.08165e-12)
 [connection signal="area_entered" from="PlayerArea2D" to="CharacterStateMachine/Death" method="_on_player_area_2d_area_entered"]
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/Landing" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/Attack" method="_on_animation_tree_animation_finished"]
+[connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/Death" method="_on_animation_tree_animation_finished"]
 [connection signal="body_entered" from="Sword" to="Sword" method="_on_body_entered"]

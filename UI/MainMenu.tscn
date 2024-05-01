@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://dkaymqqv7gjlc"]
+
+[ext_resource type="Script" path="res://Scripts/MainMenu.gd" id="1_o0r62"]
+[ext_resource type="Texture2D" uid="uid://j3ofujc62fbo" path="res://Art/Legacy-Fantasy - High Forest 2.3/Background/360_F_593820045_O5vy5kqIjV94RhjKL3LX3jA93Cg0Ok3m.jpg" id="2_2eoqo"]
+
+[sub_resource type="SystemFont" id="SystemFont_hn2il"]
+font_names = PackedStringArray("Impact")
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_o0r62")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -10.0
+offset_right = 23.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackgroundImage" type="Sprite2D" parent="VBoxContainer"]
+position = Vector2(69, 43)
+scale = Vector2(0.6, 0.7)
+texture = ExtResource("2_2eoqo")
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.780392, 0.490196, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = SubResource("SystemFont_hn2il")
+theme_override_font_sizes/font_size = 30
+text = "Tetra Trails"
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Start"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

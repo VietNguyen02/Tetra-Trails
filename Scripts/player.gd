@@ -19,6 +19,7 @@ var direction: Vector2 = Vector2.ZERO
 var playback : AnimationNodeStateMachinePlayback
 
 signal facing_direction_changed(facing_right : bool)
+signal health_changed
 
 func _ready():
 	animation_tree.active = true
@@ -36,9 +37,12 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 
+	#print(position)
+
 	update_animation()
 	update_facing_direction()
 	move_and_slide()
+	check_in_bounds()
 
 func _input(event : InputEvent):
 	# Logic for going down one-way platforms
@@ -62,6 +66,12 @@ func takeDamage(damage : int):
 func _on_player_area_2d_area_entered(area):
 	if (area.is_in_group("Enemy") && health > 1):
 		takeDamage(1)
-		print(health)
 	else:
+		takeDamage(1)
 		state_machine.switch_states(death_state)
+	
+	health_changed.emit(health)
+	
+func check_in_bounds():
+	if (position.y >= 900):
+		get_tree().change_scene_to_file("res://UI/DefeatScreen.tscn")
