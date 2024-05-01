@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name Player
+
 @export var speed : float = 200.0
 
 # Animation Child Object reference
@@ -10,6 +12,8 @@ extends CharacterBody2D
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var direction: Vector2 = Vector2.ZERO
+
+signal facing_direction_changed(facing_right : bool)
 
 func _ready():
 	animation_tree.active = true
@@ -39,4 +43,4 @@ func update_facing_direction():
 		sprite.flip_h = false
 	elif direction.x < 0:
 		sprite.flip_h = true
-		
+	emit_signal("facing_direction_changed", !sprite.flip_h)
