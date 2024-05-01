@@ -500,7 +500,7 @@ size = Vector2(28.25, 72)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("death_state")]
 collision_layer = 2
-collision_mask = 5
+collision_mask = 13
 script = ExtResource("1_521x7")
 death_state = NodePath("CharacterStateMachine/Death")
 
@@ -509,8 +509,8 @@ position = Vector2(2.08165e-12, 2)
 shape = SubResource("CapsuleShape2D_aboym")
 
 [node name="PlayerArea2D" type="Area2D" parent="." groups=["Player"]]
-collision_layer = 6
-collision_mask = 6
+collision_layer = 14
+collision_mask = 14
 
 [node name="PlayerCollisionHitbox" type="CollisionShape2D" parent="PlayerArea2D"]
 position = Vector2(2.08165e-12, 2)
