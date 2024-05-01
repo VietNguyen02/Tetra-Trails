@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cjrxypwkjf1pe"]
+[gd_scene load_steps=20 format=3 uid="uid://cjrxypwkjf1pe"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_4ei35"]
 [ext_resource type="Texture2D" uid="uid://sqbajnuu4qkp" path="res://Art/Legacy-Fantasy - High Forest 2.3/Mob/Snail/Dead-Sheet.png" id="1_co0uu"]
@@ -7,9 +7,13 @@
 [ext_resource type="Script" path="res://Scripts/State.gd" id="4_7fprl"]
 [ext_resource type="Script" path="res://Scripts/CharacterStateMachine.gd" id="4_t7eb5"]
 [ext_resource type="Script" path="res://Scripts/HitState.gd" id="5_fuxql"]
+[ext_resource type="Script" path="res://Scripts/DeathEnemy.gd" id="7_5am5u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4t6dd"]
 size = Vector2(40.5, 28.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_14g0f"]
+size = Vector2(30, 23)
 
 [sub_resource type="Animation" id="Animation_37qk5"]
 resource_name = "Death"
@@ -133,18 +137,27 @@ states/Walk/position = Vector2(359.82, 99.3878)
 transitions = ["Walk", "Death", SubResource("AnimationNodeStateMachineTransition_22bxd"), "Start", "Walk", SubResource("AnimationNodeStateMachineTransition_k8ym4")]
 graph_offset = Vector2(83.8798, -7.75498)
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("hit_state")]
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("hit_state", "death_state")]
 collision_layer = 4
 script = ExtResource("1_4ei35")
 hit_state = NodePath("CharacterStateMachine/Hit")
+death_state = NodePath("CharacterStateMachine/Death")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4.5)
 scale = Vector2(0.75, 0.8)
 shape = SubResource("RectangleShape2D_4t6dd")
 
+[node name="EnemyArea2D" type="Area2D" parent="." groups=["Enemy"]]
+collision_layer = 6
+collision_mask = 6
+
+[node name="EnemyCollisionHitbox" type="CollisionShape2D" parent="EnemyArea2D"]
+position = Vector2(0, 4.5)
+shape = SubResource("RectangleShape2D_14g0f")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_co0uu")
+texture = ExtResource("1_m2hfq")
 hframes = 8
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -172,8 +185,9 @@ animation_tree = NodePath("../AnimationTree")
 [node name="Walk" type="Node" parent="CharacterStateMachine"]
 script = ExtResource("4_7fprl")
 
-[node name="Death" type="Node" parent="CharacterStateMachine"]
-script = ExtResource("4_7fprl")
+[node name="Death" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("character_state_machine")]
+script = ExtResource("7_5am5u")
+character_state_machine = NodePath("..")
 can_move = false
 
 [node name="Hit" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("damageable", "death_state", "return_state")]
@@ -187,5 +201,6 @@ can_move = false
 wait_time = 0.25
 one_shot = true
 
+[connection signal="area_entered" from="EnemyArea2D" to="CharacterStateMachine/Death" method="_on_enemy_area_2d_area_entered"]
 [connection signal="animation_finished" from="AnimationTree" to="Damageable" method="_on_animation_tree_animation_finished"]
 [connection signal="timeout" from="CharacterStateMachine/Hit/Timer" to="CharacterStateMachine/Hit" method="_on_timer_timeout"]

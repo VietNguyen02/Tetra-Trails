@@ -3,7 +3,7 @@ extends Area2D
 class_name Sword
 
 @export var damage : float = 10
-@export var player: Player
+@export var player : Player
 @export var facing_collision_shape_2d : FacingCollisionShape2D
 
 func _ready():

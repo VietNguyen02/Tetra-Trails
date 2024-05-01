@@ -5,7 +5,9 @@ extends CharacterBody2D
 
 @export var starting_move_direction : Vector2 = Vector2.LEFT
 @export var speed : float = 25.0
+@export var death_animation_name : String = "Death"
 @export var hit_state : State
+@export var death_state : State
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
