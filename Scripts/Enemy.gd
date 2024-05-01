@@ -27,7 +27,6 @@ func _physics_process(delta):
 	var direction_to_player = (player.global_position - global_position).normalized()
 	var distance_from_player = (player.global_position - global_position)
 	
-	print(distance_from_player.x)
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	# Check if the player is within the movement threshold distance

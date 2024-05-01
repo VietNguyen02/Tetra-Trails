@@ -37,8 +37,6 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 
-	#print(position)
-
 	update_animation()
 	update_facing_direction()
 	move_and_slide()
@@ -69,7 +67,7 @@ func _on_player_area_2d_area_entered(area):
 	else:
 		takeDamage(1)
 		state_machine.switch_states(death_state)
-	
+		
 	health_changed.emit(health)
 	
 func check_in_bounds():

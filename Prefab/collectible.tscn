@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://cmb317gceqe22"]
+
+[ext_resource type="Script" path="res://Scripts/collectible.gd" id="1_8n4gt"]
+[ext_resource type="Texture2D" uid="uid://cfvupq0jlbah0" path="res://Art/Legacy-Fantasy - High Forest 2.3/HUD/Trophy.png" id="1_bx5qp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3darb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_se27m"]
+
+[node name="Collectible" type="CharacterBody2D"]
+light_mask = 8
+script = ExtResource("1_8n4gt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_3darb")
+
+[node name="Coin" type="Sprite2D" parent="."]
+position = Vector2(-0.100001, 0)
+scale = Vector2(0.148529, 0.15)
+texture = ExtResource("1_bx5qp")
+
+[node name="CollectibleArea2D" type="Area2D" parent="." groups=["Collectible"]]
+light_mask = 14
+visibility_layer = 14
+scale = Vector2(1.1, 1.1)
+collision_layer = 10
+collision_mask = 10
+
+[node name="CollectibleHitbox" type="CollisionShape2D" parent="CollectibleArea2D"]
+shape = SubResource("RectangleShape2D_se27m")
+
+[connection signal="area_entered" from="CollectibleArea2D" to="." method="_on_collectible_area_2d_area_entered"]
