@@ -45,7 +45,7 @@ func _physics_process(delta):
 func _input(event : InputEvent):
 	# Logic for going down one-way platforms
 	if (event.is_action_pressed("ui_down") && is_on_floor()):
-		position.y += 2.5
+		position.y += 3.5
 		
 func update_animation():
 	animation_tree.set("parameters/Move/blend_position", direction.x)

@@ -140,6 +140,7 @@ graph_offset = Vector2(83.8798, -7.75498)
 [node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("hit_state", "death_state")]
 collision_layer = 4
 script = ExtResource("1_4ei35")
+speed = 30.0
 hit_state = NodePath("CharacterStateMachine/Hit")
 death_state = NodePath("CharacterStateMachine/Death")
 
