@@ -5,6 +5,7 @@ class_name AirState
 @export var landing_state : State
 @export var double_jump_velocity = -100.0
 @export var landing_animation : String = "landing"
+@export var double_jump_animation : String = "Double_Jump"
 
 var has_double_jumped = false
 
@@ -23,4 +24,5 @@ func on_exit():
 
 func double_jump():
 	character.velocity.y = double_jump_velocity
+	playback.travel(double_jump_animation)
 	has_double_jumped = true
