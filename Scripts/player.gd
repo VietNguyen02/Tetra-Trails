@@ -1,15 +1,24 @@
 extends CharacterBody2D
 
+class_name Player
+
 @export var speed : float = 200.0
+@export var health : int = 3
+@export var death_state : State
+@export var death_animation_name : String = "Death"
 
 # Animation Child Object reference
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var state_machine : CharacterStateMachine = $CharacterStateMachine
+@onready var collision_shape : CollisionShape2D = $PlayerArea2D/PlayerCollisionHitbox
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var direction: Vector2 = Vector2.ZERO
+var playback : AnimationNodeStateMachinePlayback
+
+signal facing_direction_changed(facing_right : bool)
 
 func _ready():
 	animation_tree.active = true
@@ -31,12 +40,28 @@ func _physics_process(delta):
 	update_facing_direction()
 	move_and_slide()
 
+func _input(event : InputEvent):
+	# Logic for going down one-way platforms
+	if (event.is_action_pressed("ui_down") && is_on_floor()):
+		position.y += 2.5
+		
 func update_animation():
 	animation_tree.set("parameters/Move/blend_position", direction.x)
 
 func update_facing_direction():
-	if direction.x > 0:
-		sprite.flip_h = false
-	elif direction.x < 0:
-		sprite.flip_h = true
-		
+	if (state_machine.current_state != death_state):
+		if direction.x > 0:
+			sprite.flip_h = false
+		elif direction.x < 0:
+			sprite.flip_h = true
+		emit_signal("facing_direction_changed", !sprite.flip_h)
+	
+func takeDamage(damage : int):
+	health -= damage
+
+func _on_player_area_2d_area_entered(area):
+	if (area.is_in_group("Enemy") && health > 1):
+		takeDamage(1)
+		print(health)
+	else:
+		state_machine.switch_states(death_state)
